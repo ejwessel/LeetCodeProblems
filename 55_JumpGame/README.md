@@ -14,13 +14,15 @@ Instead, we used the intuition learned from DP to then solve the problem in a no
 
 I implemented the final solution
 
-Solution 1 Runtime:
+### Solution 1
+Runtime:
 - O(n^2) because in the worst case we need to scan over backwards.
 
-Solution 1 Space:
+Space:
 - O(n) keep a byte array of if indices can reach the end.
 
-Solution 2 Runtime:
+### Solution 2
+Runtime:
 - O(n) walk though each element once.
 
 Solution 2 Space: 
