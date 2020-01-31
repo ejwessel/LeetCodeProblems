@@ -41,33 +41,47 @@ class Solution:
 if __name__ == "__main__":
     sol = Solution()
 
-    # input = [
-    #     [1],
-    #     [2]
-    # ]
-    # result = sol.spiralOrder(input)
-    # assert result == [1, 2]
-    #
-    # input = [
-    #     [1, 2],
-    # ]
-    # result = sol.spiralOrder(input)
-    # assert result == [1, 2]
-    #
-    # input = [
-    #     [1, 2],
-    #     [3, 4],
-    # ]
-    # result = sol.spiralOrder(input)
-    # assert result == [1, 2, 4, 3]
-    #
-    # input = [
-    #     [1, 2, 3],
-    #     [4, 5, 6],
-    #     [7, 8, 9]
-    # ]
-    # result = sol.spiralOrder(input)
-    # assert result == [1, 2, 3, 6, 9, 8, 7, 4, 5]
+    input = [
+        [1, 2, 3]
+    ]
+    result = sol.spiralOrder(input)
+    print(result)
+
+    input = [
+        [1],
+        [2],
+        [3]
+    ]
+    result = sol.spiralOrder(input)
+    print(result)
+
+    input = [
+        [1],
+        [2]
+    ]
+    result = sol.spiralOrder(input)
+    assert result == [1, 2]
+
+    input = [
+        [1, 2],
+    ]
+    result = sol.spiralOrder(input)
+    assert result == [1, 2]
+
+    input = [
+        [1, 2],
+        [3, 4],
+    ]
+    result = sol.spiralOrder(input)
+    assert result == [1, 2, 4, 3]
+
+    input = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+    result = sol.spiralOrder(input)
+    assert result == [1, 2, 3, 6, 9, 8, 7, 4, 5]
     #
     # input = [
     #     [1, 2, 3, 4],
@@ -77,50 +91,60 @@ if __name__ == "__main__":
     # result = sol.spiralOrder(input)
     # assert result == [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
 
-    input = [
-        [1, 2, 3, 4, 5],
-        [6, 7, 8, 9, 1],
-        [2, 3, 4, 5, 6],
-    ]
-    result = sol.spiralOrder(input)
-    print(result)
-    #assert result == [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
+    # input = [
+    #     [1, 2, 3],
+    #     [4, 5, 6],
+    #     [7, 8, 9],
+    #     [1, 2, 3],
+    #     [4, 5, 6]
+    # ]
+    # result = sol.spiralOrder(input)
+    # print(result)
+    #
+    # input = [
+    #     [1, 2, 3, 4, 5],
+    #     [6, 7, 8, 9, 1],
+    #     [2, 3, 4, 5, 6],
+    # ]
+    # result = sol.spiralOrder(input)
+    # print(result)
+    # #assert result == [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
 
-    input = [
-        [1, 2, 3, 4, 5],
-        [6, 7, 8, 9, 1],
-        [2, 3, 4, 5, 6],
-        [7, 8, 9, 1, 2],
-        [3, 4, 5, 6, 7]
-    ]
-    result = sol.spiralOrder(input)
-    assert result == [1, 2, 3, 4, 5, 1, 6, 2, 7, 6, 5, 4, 3, 7, 2, 6, 7, 8, 9, 5, 1, 9, 8, 3, 4]
-
-    input = [
-        [1, 2, 3, 4, 5],
-        [6, 7, 8, 9, 1],
-        [2, 3, 4, 5, 6],
-        [7, 8, 9, 1, 2],
-    ]
-    result = sol.spiralOrder(input)
-    assert result == [1, 2, 3, 4, 5, 1, 6, 2, 1, 9, 8, 7, 2, 6, 7, 8, 9, 5, 4, 3]
-
-    input = [
-        [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    ]
-    result = sol.spiralOrder(input)
-    assert result == [1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 8, 7, 6, 5, 4, 3, 2]
-
-    input = [
-        [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    ]
-    result = sol.spiralOrder(input)
-    print(result)
-    assert result == [1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 8, 8, 7, 6, 5, 4, 3, 2, 2, 3, 4, 5, 6, 7]
+    # input = [
+    #     [1, 2, 3, 4, 5],
+    #     [6, 7, 8, 9, 1],
+    #     [2, 3, 4, 5, 6],
+    #     [7, 8, 9, 1, 2],
+    #     [3, 4, 5, 6, 7]
+    # ]
+    # result = sol.spiralOrder(input)
+    # assert result == [1, 2, 3, 4, 5, 1, 6, 2, 7, 6, 5, 4, 3, 7, 2, 6, 7, 8, 9, 5, 1, 9, 8, 3, 4]
+    #
+    # input = [
+    #     [1, 2, 3, 4, 5],
+    #     [6, 7, 8, 9, 1],
+    #     [2, 3, 4, 5, 6],
+    #     [7, 8, 9, 1, 2],
+    # ]
+    # result = sol.spiralOrder(input)
+    # assert result == [1, 2, 3, 4, 5, 1, 6, 2, 1, 9, 8, 7, 2, 6, 7, 8, 9, 5, 4, 3]
+    #
+    # input = [
+    #     [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    #     [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    #     [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    #     [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    # ]
+    # result = sol.spiralOrder(input)
+    # assert result == [1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 8, 7, 6, 5, 4, 3, 2]
+    #
+    # input = [
+    #     [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    #     [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    #     [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    #     [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    #     [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    # ]
+    # result = sol.spiralOrder(input)
+    # print(result)
+    # assert result == [1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 8, 8, 7, 6, 5, 4, 3, 2, 2, 3, 4, 5, 6, 7]
