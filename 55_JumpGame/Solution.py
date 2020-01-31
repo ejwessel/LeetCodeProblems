@@ -21,7 +21,15 @@ class Solution:
         return can_access_end[0]
 
     def canJump(self, nums: List[int]) -> bool:
-        pass
+        # keep track of last best index to avoid scanning
+        last_best_idx = len(nums) - 1
+        # work our way backwards
+        for i in reversed(range(len(nums))):
+            # >= to last best index then we're good
+            if i + nums[i] >= last_best_idx:
+                last_best_idx = i
+
+        return last_best_idx == 0
 
 
 if __name__ == "__main__":
@@ -57,4 +65,36 @@ if __name__ == "__main__":
 
     nums = [1, 1, 0, 1]
     result = sol.canJump_inoptimal(nums)
+    assert not result
+
+    nums = [1]
+    result = sol.canJump(nums)
+    assert result
+
+    nums = [2, 3, 1, 1, 4]
+    result = sol.canJump(nums)
+    assert result
+
+    nums = [3, 2, 1, 0, 4]
+    result = sol.canJump(nums)
+    assert not result
+
+    nums = [9, 9, 9, 9, 1]
+    result = sol.canJump(nums)
+    assert result
+
+    nums = [9, 0, 0, 0, 1]
+    result = sol.canJump(nums)
+    assert result
+
+    nums = [0, 9, 9, 9, 1]
+    result = sol.canJump(nums)
+    assert not result
+
+    nums = [1, 2, 0, 1]
+    result = sol.canJump(nums)
+    assert result
+
+    nums = [1, 1, 0, 1]
+    result = sol.canJump(nums)
     assert not result
