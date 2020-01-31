@@ -21,7 +21,7 @@ class Solution:
         return can_access_end[0]
 
     def canJump(self, nums: List[int]) -> bool:
-        # keep track of last best index to avoid scanning
+        # keep track of last best index to avoid scanning forward
         last_best_idx = len(nums) - 1
         # work our way backwards
         for i in reversed(range(len(nums))):
