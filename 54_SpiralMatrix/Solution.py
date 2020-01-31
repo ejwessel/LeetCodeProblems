@@ -3,6 +3,10 @@ from typing import List
 
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+
+        if len(matrix) == 0:
+            return []
+
         col_start = 0
         row_start = 0
 
@@ -58,6 +62,10 @@ class Solution:
 
 if __name__ == "__main__":
     sol = Solution()
+
+    input = []
+    result = sol.spiralOrder(input)
+    assert result == []
 
     input = [
         [1, 2, 3]
