@@ -18,40 +18,34 @@ class Solution:
 
         while col_start < col_len / 2 and row_start < row_len / 2:
 
-            seen_coord = set()
-
             # case when we hit the center
             if col_start == col_len - 1 - layer and row_start == row_len - 1 - layer:
-                if (row_start, col_start) not in seen_coord:
-                    output.append(matrix[row_start][col_start])
-                    seen_coord.add((row_start, col_start))
+                output.append(matrix[row_start][col_start])
+
+            # prevents double backing
+            last_seen_row = None
+            last_seen_col = None
 
             # top row
             for i in range(col_start, col_len - 1 - layer):
-                if (row_start, i) not in seen_coord:
-                    output.append(matrix[row_start][i])
-                    seen_coord.add((row_start, i))
+                output.append(matrix[row_start][i])
+                last_seen_row = (row_start, i)
             # right row
             for i in range(row_start, row_len - 1 - layer):
-                if (i, col_len - 1 - layer) not in seen_coord:
-                    output.append(matrix[i][col_len - 1 - layer])
-                    seen_coord.add((i, col_len - 1 - layer))
+                output.append(matrix[i][col_len - 1 - layer])
+                last_seen_col = (i, col_len - 1 - layer)
             # bottom row
             for i in reversed(range(col_start + 1, col_len - layer)):
-                if (row_len - 1 - layer, i) not in seen_coord:
-                    output.append(matrix[row_len - 1 - layer][i])
-                    seen_coord.add((row_len - 1 - layer, i))
-                else:
-                    # we break because we would have seen all the elements amongst the row
+                # if we begin to double back stop
+                if (row_len - 1 - layer, i) == last_seen_row:
                     break
+                output.append(matrix[row_len - 1 - layer][i])
             # left column
             for i in reversed(range(row_start + 1, row_len - layer)):
-                if (i, col_start) not in seen_coord:
-                    output.append(matrix[i][col_start])
-                    seen_coord.add((i, col_start))
-                else:
-                    # we break because we would have seen all the elements amongst the row
+                # if we begin to double back stop
+                if (i, col_start) == last_seen_col:
                     break
+                output.append(matrix[i][col_start])
 
             col_start += 1
             row_start += 1
@@ -178,3 +172,4 @@ if __name__ == "__main__":
     ]
     result = sol.spiralOrder(input)
     assert result == [1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 8, 8, 7, 6, 5, 4, 3, 2, 2, 3, 4, 5, 6, 7]
+
