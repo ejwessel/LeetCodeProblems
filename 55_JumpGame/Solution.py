@@ -28,8 +28,9 @@ class Solution:
 if __name__ == "__main__":
     sol = Solution()
 
-    nums = []
-    result =
+    nums = [1]
+    result = sol.canJump(nums)
+    assert result
 
     nums = [2, 3, 1, 1, 4]
     result = sol.canJump(nums)
