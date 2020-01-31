@@ -56,6 +56,12 @@ if __name__ == "__main__":
     print(result)
 
     input = [
+        [1]
+    ]
+    result = sol.spiralOrder(input)
+    assert result == [1]
+
+    input = [
         [1],
         [2]
     ]
