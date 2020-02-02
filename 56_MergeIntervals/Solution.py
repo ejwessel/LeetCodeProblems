@@ -3,7 +3,15 @@ from typing import List
 
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        '''
+        merging intervals together
+        :param intervals: the intervals to merge
+        :return: the merged internals list
+        '''
         i = 0
+
+        # must sort first in order to have the list items be in the right order for merging
+        intervals.sort()
 
         # -1 because we're looking +1 ahead
         while i < len(intervals) - 1:
@@ -80,3 +88,13 @@ if __name__ == "__main__":
     intervals = [[2, 3], [4, 5], [6, 7], [8, 9], [1, 10]]
     result = sol.merge(intervals)
     assert result == [[1, 10]]
+
+    intervals = [[2, 3], [4, 5], [6, 7], [8, 9], [-1, 10]]
+    result = sol.merge(intervals)
+    assert result == [[-1, 10]]
+
+    intervals = [[2, 3], [4, 5], [6, 7], [8, 10], [1, 9], [2, 2]]
+    intervals.sort()
+    result = sol.merge(intervals)
+    assert result == [[1, 10]]
+
