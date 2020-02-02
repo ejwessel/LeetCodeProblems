@@ -1,4 +1,5 @@
 from math import factorial
+from itertools import permutations
 
 class Solution:
     def getPermutation(self, n: int, k: int) -> str:
@@ -40,6 +41,13 @@ if __name__ == "__main__":
     Given k will be between 1 and n! inclusive.
     '''
 
+    # p = permutations([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    # count = 1
+    # for i in p:
+    #     if count == 360000:
+    #         print(i)
+    #     count += 1
+
     result = sol.getPermutation(1, 1)
     assert result == '1'
 
@@ -54,3 +62,8 @@ if __name__ == "__main__":
 
     result = sol.getPermutation(4, 1)
     assert result == '1234'
+
+    result = sol.getPermutation(9, 360000)
+    assert result == '983765421'
+
+
