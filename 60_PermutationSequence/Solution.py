@@ -3,9 +3,6 @@ from math import factorial
 class Solution:
     def getPermutation(self, n: int, k: int) -> str:
 
-        if n == 0:
-            return "1"
-
         list = []
         for i in range(n):
             list.append(i + 1)
@@ -38,9 +35,10 @@ class Solution:
 if __name__ == "__main__":
     sol = Solution()
 
-    # what about when n = 0, k = 0, n = 1, k = 1, other edge cases
-    result = sol.getPermutation(0, 1)
-    assert result == '1'
+    '''
+    Given n will be between 1 and 9 inclusive.
+    Given k will be between 1 and n! inclusive.
+    '''
 
     result = sol.getPermutation(1, 1)
     assert result == '1'
