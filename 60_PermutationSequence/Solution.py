@@ -2,7 +2,7 @@ from math import factorial
 from itertools import permutations
 
 class Solution:
-    def getPermutation(self, n: int, k: int) -> str:
+    def getPermutationRecursive(self, n: int, k: int) -> str:
         '''
         obtains the kth target permutation
         :param n: n! elements that we need to identify k over
@@ -14,11 +14,11 @@ class Solution:
         for i in range(n):
             list.append(i + 1)
 
-        result = self.recursiveFind(list, k, 0)
+        result = self.recursiveFindRecursive(list, k, 0)
         result = ''.join(result)
         return result
 
-    def recursiveFind(self, list, k, prev_lower_rng):
+    def recursiveFindRecursive(self, list, k, prev_lower_rng):
         '''
         recursively identifies the target k permutation element
         :param list: the list of remaining items
@@ -41,8 +41,34 @@ class Solution:
             lower_range = upper_range
 
         list_without_selected = list[:selected_idx] + list[selected_idx + 1:]
-        result = [str(list[selected_idx])] + self.recursiveFind(list_without_selected, k, lower_range)
+        result = [str(list[selected_idx])] + self.recursiveFindRecursive(list_without_selected, k, lower_range)
         return result
+
+    def getPermutation(self, n, k):
+
+        list = []
+        for i in range(n):
+            list.append(i + 1)
+
+        result = ""
+
+        for i in range(n - 1, 0, -1):
+            lower_bound = factorial(i)
+            current_idx = 0
+
+            # identify what element can be removed
+            while k > lower_bound:
+                k -= lower_bound
+                current_idx += 1
+
+            result += str(list[current_idx])
+            list.pop(current_idx)
+
+        # add back the element that hasn't been removed
+        result += str(list[0])
+
+        return result
+
 
 
 
@@ -80,6 +106,27 @@ if __name__ == "__main__":
     assert result == '1234'
 
     result = sol.getPermutation(9, 360000)
+    assert result == '983765421'
+
+    result = sol.getPermutationRecursive(4, 7)
+    assert result == '2134'
+
+    result = sol.getPermutationRecursive(1, 1)
+    assert result == '1'
+
+    result = sol.getPermutationRecursive(4, 9)
+    assert result == '2314'
+
+    result = sol.getPermutationRecursive(3, 3)
+    assert result == '213'
+
+    result = sol.getPermutationRecursive(4, 22)
+    assert result == '4231'
+
+    result = sol.getPermutationRecursive(4, 1)
+    assert result == '1234'
+
+    result = sol.getPermutationRecursive(9, 360000)
     assert result == '983765421'
 
 
