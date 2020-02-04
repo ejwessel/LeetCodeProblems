@@ -82,3 +82,15 @@ if __name__ == "__main__":
     assert result
     result = sol.searchMatrix(matrix, 100)
     assert not result
+
+    matrix = [
+        [1],
+    ]
+    result = sol.searchMatrix(matrix, 13)
+    assert not result
+    result = sol.searchMatrix(matrix, 3)
+    assert not result
+    result = sol.searchMatrix(matrix, 100)
+    assert not result
+    result = sol.searchMatrix(matrix, 1)
+    assert result
