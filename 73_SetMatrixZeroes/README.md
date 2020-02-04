@@ -1,5 +1,8 @@
 ## Set Matrix Zeroes
 
+Its important to keep track of the rows and columns independently before modifying them to see if 0th row or column is marked
+This is because the 0th rows and columns are used as indicators for the remaining matrix
+
 Runtime: O(mn)
 - need to look at every cell in the input
 
