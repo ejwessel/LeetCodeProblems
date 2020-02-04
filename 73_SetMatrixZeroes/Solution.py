@@ -6,9 +6,20 @@ class Solution:
 
         row_len = len(matrix)
         col_len = len(matrix[0])
-        # flag all rows and columns
+
+        zero_col_flagged = False
+        zero_row_flagged = False
+        #determine if [0][0] is flagged
         for row in range(row_len):
-            for col in range(col_len):
+            if matrix[row][0] == 0:
+                zero_row_flagged = True
+        for col in range(col_len):
+            if matrix[0][col] == 0:
+                zero_col_flagged = True
+
+        # flag all rows and columns
+        for row in range(1, row_len):
+            for col in range(1, col_len):
                 if matrix[row][col] == 0:
                     matrix[0][col] = 0
                     matrix[row][0] = 0
@@ -34,17 +45,48 @@ class Solution:
                     matrix[row][col] = 0
 
         # handle the flags columns and rows
-        if matrix[0][0] == 0:
-            for col in range(col_len):
-                matrix[0][col] = 0
+        if zero_row_flagged:
             for row in range(row_len):
                 matrix[row][0] = 0
+
+        if zero_col_flagged:
+            for col in range(col_len):
+                matrix[0][col] = 0
 
 
 if __name__ == "__main__":
     sol = Solution()
 
-    # marked the [0][0] too soon
+    input = [
+        [1, 0, 1],
+        [1, 1, 2]
+    ]
+    sol.setZeroes(input)
+    assert input == [
+        [0, 0, 0],
+        [1, 0, 2]
+    ]
+
+    input = [
+        [0, 1, 1],
+        [1, 1, 2]
+    ]
+    sol.setZeroes(input)
+    assert input == [
+        [0, 0, 0],
+        [0, 1, 2]
+    ]
+
+    input = [
+        [1, 1, 1],
+        [1, 0, 2]
+    ]
+    sol.setZeroes(input)
+    assert input == [
+        [1, 0, 1],
+        [0, 0, 0]
+    ]
+
     input = [
         [1, 1, 1],
         [0, 1, 2]
