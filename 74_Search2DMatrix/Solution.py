@@ -1,5 +1,6 @@
 from typing import List
 
+
 class Solution:
     def binarySearch(self, elements, target):
         s = 0
@@ -13,13 +14,18 @@ class Solution:
                 e = mid
             elif target > elements[mid]:
                 s = mid + 1
-
         return False
-
 
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         s = 0
         e = len(matrix)
+
+        # ensure there are elements
+        if len(matrix) == 0:
+            return False
+        if len(matrix[0]) == 0:
+            return False
+
         while (s < e):
             mid = int((s + e) / 2)
             if matrix[mid][0] <= target <= matrix[mid][len(matrix[0]) - 1]:
@@ -33,6 +39,17 @@ class Solution:
 
 if __name__ == "__main__":
     sol = Solution()
+
+    matrix = [
+    ]
+    result = sol.searchMatrix(matrix, 13)
+    assert not result
+
+    matrix = [
+        [],
+    ]
+    result = sol.searchMatrix(matrix, 13)
+    assert not result
 
     elements = [1, 2, 3, 4, 6, 7, 8, 9, 10]
     result = sol.binarySearch(elements, 8)
@@ -94,3 +111,4 @@ if __name__ == "__main__":
     assert not result
     result = sol.searchMatrix(matrix, 1)
     assert result
+
