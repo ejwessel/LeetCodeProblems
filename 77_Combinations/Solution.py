@@ -6,21 +6,27 @@ class Solution:
         self.solutions = []
 
     def combine(self, n: int, k: int):
-        self._combine(n, k, 1, [])
+        self._combine(n + 1, k, 1, [])
         return self.solutions
 
     def _combine(self, n: int, k: int, start: int, sol: List) -> List[List[int]]:
         if len(sol) == k:
             self.solutions.append(sol)
         else:
-            bound = n - (k - (start))
-            for i in range(start, bound):
+            for i in range(start, n):
                 self._combine(n, k, i + 1, sol + [i])
 
 
 if __name__ == "__main__":
     sol = Solution()
+    result = sol.combine(4, 2)
+    print(result)
 
+    sol = Solution()
+    result = sol.combine(4, 3)
+    print(result)
+
+    sol = Solution()
     result = sol.combine(4, 4)
     print(result)
 
