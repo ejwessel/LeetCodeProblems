@@ -102,13 +102,56 @@ if __name__ == "__main__":
     result = sol.exist(board, "ABCB")
     assert not result
 
+    result = sol.exist(board, "ABCESCFSADEE")
+    assert result
+
+    result = sol.exist(board, "ABCESCFSADEEA")
+    assert not result
+
+    result = sol.exist(board, "F")
+    assert result
+
+    board = [
+        ['A'],
+    ]
+    result = sol.exist(board, "F")
+    assert not result
+
+    board = [
+        ['A', 'B', 'C', 'E'],
+        ['S', 'F', 'C', 'S'],
+        ['A', 'B', 'C', 'E'],
+        ['S', 'F', 'C', 'S'],
+        ['A', 'D', 'E', 'E'],
+        ['A', 'B', 'C', 'E'],
+        ['S', 'F', 'C', 'S'],
+        ['A', 'D', 'E', 'E'],
+        ['A', 'D', 'E', 'E']
+    ]
+    result = sol.exist(board, "ABCCFSABCCFDECBASFCSEEDDEE")
+    assert result
+
+    result = sol.exist(board, "ABCCFBCCFDECCFBASADDEEEE")
+    assert result
+
+    board = [
+        []
+    ]
+    result = sol.exist(board, "ABC")
+    assert not result
+
+    board = [
+    ]
+    result = sol.exist(board, "ABC")
+    assert not result
+
     '''
-    longer than the board size
-    words smaller than board size
-    words that exist
-    words that !exist
-    small board
-    large board
-    board with no items []
-    board with no items [[]]
+    longer than the board size √
+    words smaller than board size √
+    words that exist √
+    words that !exist √
+    small board √
+    large board √
+    board with no items [] √
+    board with no items [[]] √
     '''
