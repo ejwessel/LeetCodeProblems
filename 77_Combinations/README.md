@@ -14,3 +14,4 @@ Space: O(n^2)
 - solution increases by 1 each level 1, 2, 3, ..., n -> O(n^2)
 - depth is at max k recursive stack is O(k)
 - space id dominated by the increasing solution
+- This can be better represented as O(nCk) since this is the exact number of elements
