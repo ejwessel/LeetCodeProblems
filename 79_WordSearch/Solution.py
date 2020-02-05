@@ -101,3 +101,14 @@ if __name__ == "__main__":
 
     result = sol.exist(board, "ABCB")
     assert not result
+
+    '''
+    longer than the board size
+    words smaller than board size
+    words that exist
+    words that !exist
+    small board
+    large board
+    board with no items []
+    board with no items [[]]
+    '''
