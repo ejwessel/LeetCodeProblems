@@ -23,13 +23,13 @@ class Solution:
 
 
 if __name__ == "__main__":
-    # sol = Solution()
-    # result = sol.combine(4, 0)
-    # assert result == [[]]  # may need to be []
-    #
-    # sol = Solution()
-    # result = sol.combine(4, 1)
-    # assert result == [[1], [2], [3], [4]]
+    sol = Solution()
+    result = sol.combine(4, 0)
+    assert result == [[]]  # may need to be []
+
+    sol = Solution()
+    result = sol.combine(4, 1)
+    assert result == [[1], [2], [3], [4]]
 
     sol = Solution()
     result = sol.combine(4, 2)
