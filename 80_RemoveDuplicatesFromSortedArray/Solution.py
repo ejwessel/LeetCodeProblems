@@ -1,32 +1,31 @@
 from typing import List
 
-
 class Solution:
-    def removeDuplicates_1(self, nums: List[int]) -> int:
-        i = 0
-        e = len(nums) - 1
-        c = 1
-        prev_c = None
-        while i < e:
-            if nums[i] == nums[i + 1]:
-                c += 1
-                if c == 3:
-                    nums[i + 1], nums[e] = nums[e], nums[i + 1]
-                    e -= 1
-                    c -= 1
-                    if nums[i + 1] > nums[i + 2] and i + 1 is not e:
-                        nums[i + 1], nums[i + 2] = nums[i + 2], nums[i + 1]
-                else:
-                    i += 1
-            elif nums[i] > nums[i + 1]:
-                nums[i], nums[i + 1] = nums[i + 1], nums[i]
-                i -= 1
-                c = prev_c
-            elif nums[i] < nums[i + 1]:
-                prev_c = c
-                c = 1
-                i += 1
-        return e + 1
+    def removeDuplicates(self, nums: List[int]) -> int:
+        i = 0  # current index of element we're looking at
+        b = 0  # current index of element we're going to overwrite
+        count = 1  # count to keep track of how many of an element we've seen
+
+        while i < len(nums):
+            if i == 0:
+                # we're at the beginning
+                nums[b] == nums[i]
+                b += 1
+            elif nums[i - 1] != nums[i]:
+                # new element is identified
+                nums[b] = nums[i]
+                b += 1
+                count = 1
+            elif nums[i - 1] == nums[i]:
+                # duplicate element identified
+                count += 1
+                if count <= 2:
+                    # condition to write when there are duplicates
+                    nums[b] = nums[i]
+                    b += 1
+            # every iteration increases i
+            i += 1
+        return b
 
 
 if __name__ == "__main__":
