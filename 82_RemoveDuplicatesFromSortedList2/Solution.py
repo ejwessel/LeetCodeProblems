@@ -19,20 +19,20 @@ class Solution:
                 next_node.next = None
                 next_node = current.next
 
-            # this case handles if we need to remove the head
             if duplicate_detected and tail is None:
+                # this case handles if we need to remove the head
                 head = current.next
                 current.next = None
                 current = head
             elif duplicate_detected:
+                # handle the case when not removing head
                 after_current = current.next
                 tail.next = after_current
                 current.next = None
-                current = tail
-
-            tail = current
-            # can't move current forward if there is nothing to move it to
-            if current is not None:
+                current = tail.next
+            else:
+                # move tail and current up
+                tail = current
                 current = current.next
         return head
 
@@ -48,19 +48,6 @@ def printList(head):
 
 if __name__ == "__main__":
     sol = Solution()
-
-    node_1 = ListNode(1)
-    node_2 = ListNode(1)
-    node_3 = ListNode(2)
-    node_4 = ListNode(2)
-    node_1.next = node_2
-    node_2.next = node_3
-    node_3.next = node_4
-    output = printList(node_1)
-    print(output)
-    head = sol.deleteDuplicates(node_1)
-    output = printList(head)
-    print()
 
     node_1 = ListNode(1)
     node_2 = ListNode(2)
@@ -82,6 +69,21 @@ if __name__ == "__main__":
     output = printList(head)
     print(output)
     assert output == [1, 2, 5]
+    print()
+
+    node_1 = ListNode(1)
+    node_2 = ListNode(1)
+    node_3 = ListNode(2)
+    node_4 = ListNode(2)
+    node_1.next = node_2
+    node_2.next = node_3
+    node_3.next = node_4
+    output = printList(node_1)
+    print(output)
+    head = sol.deleteDuplicates(node_1)
+    output = printList(head)
+    print(output)
+    assert output == []
     print()
 
     node_1 = ListNode(1)
