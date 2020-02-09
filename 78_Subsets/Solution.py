@@ -9,17 +9,17 @@ class Solution:
     def combine(self, n: int, k: int):
         # +1 to n because we start counting at 1 and so the upper range needs to be 1 higher
         # 1 to start because we start counting at 1
-        self._combine(n + 1, k, 1, [])
+        self._combine(n, k, 0, [])
 
     def _combine(self, n: int, k: int, start: int, sol: List) -> List[List[int]]:
         if len(sol) == k:
             self.solutions.append(sol)
         else:
-            # the bound is computed to optimize the upper bound
-            bound = min(n, n - (k - start))
+            # compute the upper bound of the window
+            bound = min(n, n - (k - start - 1))
             # in of bound and n so that we don't go over n
             for i in range(start, bound):
-                self._combine(n, k, i + 1, sol + [self.nums[i - 1]])
+                self._combine(n, k, i + 1, sol + [self.nums[i]])
 
     def subsets(self, nums):
         self.nums = nums
