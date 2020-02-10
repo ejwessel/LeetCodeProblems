@@ -165,3 +165,12 @@ if __name__ == "__main__":
     head = sol.reverseBetween(node_1, 1, 1)
     output = printLL(head)
     assert output == [1, 2, 3, 4, 5]
+
+    # move head
+    node_1 = ListNode(1)
+    output = printLL(node_1)
+    assert output == [1]
+    sol = Solution()
+    head = sol.reverseBetween(node_1, 1, 1)
+    output = printLL(head)
+    assert output == [1]
