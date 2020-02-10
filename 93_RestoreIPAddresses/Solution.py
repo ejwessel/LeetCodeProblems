@@ -57,3 +57,21 @@ if __name__ == "__main__":
     result = sol.restoreIpAddresses('111')
     assert result == []
 
+    result = sol.restoreIpAddresses('111111111111111')
+    assert result == []
+
+    tmp_str = ""
+    for i in range(14):
+        result = sol.restoreIpAddresses(tmp_str)
+        print(result)
+        print(len(result))
+        tmp_str += "1"
+
+    tmp_str = ""
+    for i in range(14):
+        result = sol.restoreIpAddresses(tmp_str)
+        print(result)
+        print(len(result))
+        print()
+        tmp_str += "2"
+
