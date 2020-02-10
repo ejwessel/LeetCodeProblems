@@ -21,15 +21,6 @@ class ReverseLinkedList:
             self.head = new_node
 
 
-def printLL(head: ListNode):
-    output = []
-    current = head
-    while current is not None:
-       output.append(current.val)
-       current = current.next
-    return output
-
-
 class Solution:
     def reverseBetween(self, head: ListNode, m: int, n: int) -> ListNode:
         '''
@@ -78,6 +69,16 @@ class Solution:
             reversed_list.last_node.next = last_node
 
         return head
+
+
+def printLL(head: ListNode):
+    output = []
+    current = head
+    while current is not None:
+        output.append(current.val)
+        current = current.next
+    return output
+
 
 if __name__ == "__main__":
     # m < n
