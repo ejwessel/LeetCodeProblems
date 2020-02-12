@@ -10,19 +10,28 @@ class Solution:
         return self.numTreesHelper(1, n + 1)
 
     def numTreesHelper(self, start, end):
+        # when start is at end we are at a node.
+        # There is only 1 solution for a node
         if start >= end:
             return 1
 
+        # when looking a start to end, it's over a range
+        # we can look up the amount of work for a given range if we've already done it before
+        # the number of trees possible for a given range of numbers is always the same
         diff = end - start
         if diff in self.range_cache:
             return self.range_cache[diff]
 
+        # The compute under a different range
         tree_count = 0
         for i in range(start, end):
             left_subtree_count = self.numTreesHelper(start, i)
             right_subtree_count = self.numTreesHelper(i + 1, end)
             tree_count += left_subtree_count * right_subtree_count
+
+        # cache work we've done for this range
         self.range_cache[diff] = tree_count
+
         return tree_count
 
 
