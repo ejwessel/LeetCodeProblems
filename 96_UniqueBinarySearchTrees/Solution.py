@@ -1,5 +1,8 @@
-
 class Solution:
+
+    def __init__(self):
+        self.range_cache = {}
+
     def numTrees(self, n: int) -> int:
         if n == 0:
             return 0
@@ -10,18 +13,18 @@ class Solution:
         if start >= end:
             return 1
 
+        diff = end - start
+        if diff in self.range_cache:
+            return self.range_cache[diff]
+
         tree_count = 0
         for i in range(start, end):
             left_subtree_count = self.numTreesHelper(start, i)
             right_subtree_count = self.numTreesHelper(i + 1, end)
-
-            if left_subtree_count > 0 and right_subtree_count > 0:
-                tree_count += left_subtree_count * right_subtree_count
-            elif right_subtree_count == 0:
-                tree_count += left_subtree_count
-            elif left_subtree_count == 0:
-                tree_count += right_subtree_count
+            tree_count += left_subtree_count * right_subtree_count
+        self.range_cache[diff] = tree_count
         return tree_count
+
 
 if __name__ == "__main__":
     sol = Solution()
