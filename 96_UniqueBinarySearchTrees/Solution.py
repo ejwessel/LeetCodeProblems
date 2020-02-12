@@ -40,7 +40,7 @@ class Solution:
 
     def numTreesHelper(self, start, end):
         if start >= end:
-            return 0
+            return 1
 
         tree_count = 0
         for i in range(start, end):
@@ -85,5 +85,13 @@ if __name__ == "__main__":
     print(len(results))
 
     sol = Solution()
+    results = sol.numTrees(4)
+    print(results)
+
+    sol = Solution()
     results = sol.generateTrees(5)
     print(len(results))
+
+    sol = Solution()
+    results = sol.numTrees(5)
+    print(results)
