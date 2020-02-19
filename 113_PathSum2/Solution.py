@@ -7,6 +7,7 @@ class TreeNode:
         self.left = None
         self.right = None
 
+
 class Solution:
     def __init__(self):
         self.solutions = []
@@ -54,6 +55,30 @@ class Solution2:
                 output.append([root.val] + path)
 
         return output
+
+
+class Solution3:
+    def __init__(self):
+        self.solutions = []
+        self.stack = []
+
+    def pathSum(self, root: TreeNode, target: int) -> List[List[int]]:
+        self._pathSum(root, target)
+        return self.solutions
+
+    def _pathSum(self, root, target):
+        if root is None:
+            return
+        if root.left is None and root.right is None:
+            self.stack.append(root.val)
+            if sum(self.stack) == target:
+                self.solutions.append(self.stack.copy())
+            self.stack.pop(-1)
+        else:
+            self.stack.append(root.val)
+            self._pathSum(root.left, target)
+            self._pathSum(root.right, target)
+            self.stack.pop(-1)
 
 
 if __name__ == "__main__":
@@ -135,5 +160,48 @@ if __name__ == "__main__":
     assert result == [[5]]
 
     sol = Solution2()
+    result = sol.pathSum(None, 5)
+    assert result == []
+
+    # =========================
+
+    node_1 = TreeNode(5)
+    node_2 = TreeNode(4)
+    node_3 = TreeNode(8)
+    node_4 = TreeNode(11)
+    node_5 = TreeNode(13)
+    node_6 = TreeNode(4)
+    node_7 = TreeNode(7)
+    node_8 = TreeNode(2)
+    node_9 = TreeNode(5)
+    node_10 = TreeNode(1)
+    node_1.left = node_2
+    node_1.right = node_3
+    node_2.left = node_4
+    node_3.left = node_5
+    node_3.right = node_6
+    node_4.left = node_7
+    node_4.right = node_8
+    node_6.left = node_9
+    node_6.right = node_10
+
+    sol = Solution3()
+    result = sol.pathSum(node_1, 22)
+    assert result == [[5, 4, 11, 2], [5, 8, 4, 5]]
+
+    sol = Solution3()
+    result = sol.pathSum(node_1, 26)
+    assert result == [[5, 8, 13]]
+
+    sol = Solution3()
+    result = sol.pathSum(node_1, 100)
+    assert result == []
+
+    node_1 = TreeNode(5)
+    sol = Solution3()
+    result = sol.pathSum(node_1, 5)
+    assert result == [[5]]
+
+    sol = Solution3()
     result = sol.pathSum(None, 5)
     assert result == []
