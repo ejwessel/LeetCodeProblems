@@ -14,39 +14,40 @@ class Solution:
         if root is None:
             return None
 
-        # traverse only down to the left
+        # don't do anything if we're at a leaf
+        if root.left is None and root.right is None:
+            return root
+
+        # connect children
+        if root.left:
+            root.left.next = root.right
+
+        # handle connecting all trees on next level if current root has a next
+        prev = None
         current = root
         while current is not None:
-            if not root.left and not root.right:
-                current = current.next
-                continue
+            # First identify the element that will need to be connected
+            if prev is None:
+                # Prioritize right over left
+                # It's possible no prev is set and therefore we need to move forward
+                if current.right:
+                    prev = current.right
+                elif current.left:
+                    prev = current.left
+            else:
+                # Prioritize left over right
+                # It's possible that nothing is linked and therefore we need to move forward
+                if current.left:
+                    prev.next = current.left
+                    prev = prev.next
+                elif current.right:
+                    prev.next = current.right
+                    prev = prev.next
 
-            # traverse through the linked list to the right
-            list_cursor = current
-            prev = None
-            while list_cursor is not None:
+            current = current.next
 
-                # link children
-                if list_cursor.left:
-                    list_cursor.left.next = list_cursor.right
-
-                # set prev is not set, set it to whatever we can find
-                if prev is None:
-                    if list_cursor.right:
-                        prev = list_cursor.right
-                    elif list_cursor.left:
-                        prev = list_cursor.left
-                else:
-                    if list_cursor.left:
-                        prev.next = list_cursor.left
-                        prev = prev.next
-                    elif list_cursor.right:
-                        prev.next = list_cursor.right
-                        prev = prev.next
-
-                list_cursor = list_cursor.next
-
-            current = current.left
+        self.connect(root.right)
+        self.connect(root.left)
         return root
 
 class Printer:
@@ -84,6 +85,7 @@ class Printer:
 
 if __name__ == "__main__":
     sol = Solution()
+
     node_0 = Node(1)
     node_1 = Node(2)
     node_2 = Node(2)
@@ -99,75 +101,25 @@ if __name__ == "__main__":
     node_12 = Node(4)
     node_15 = Node(5)
     node_16 = Node(5)
-
     node_0.left = node_1
     node_0.right = node_2
-
     node_1.left = node_3
     node_1.right = node_4
-
     node_2.left = node_5
     node_2.right = node_6
-
     node_3.left = node_7
     node_3.right = node_8
-
     node_4.left = node_9
     node_4.right = node_10
-
     node_5.left = node_11
     node_5.right = node_12
-
     node_7.left = node_15
     node_7.right = node_16
-
+    sol.connect(node_0)
     printer = Printer()
     output = printer.printLevelOrder(node_0)
     print(output)
-    sol.connect(node_1)
-    printer = Printer()
-    output = printer.printLevelOrder(node_0)
-    print(output)
-    exit()
-
-
-    node_1 = Node(1)
-    node_2 = Node(2)
-    node_3 = Node(3)
-    node_4 = Node(4)
-    node_5 = Node(5)
-    node_6 = Node(6)
-    node_7 = Node(7)
-    node_1.left = node_2
-    node_1.right = node_3
-    node_2.left = node_4
-    node_2.right = node_5
-    node_3.left = node_6
-    node_3.right = node_7
-
-    sol.connect(node_1)
-    printer = Printer()
-    output = printer.printLevelOrder(node_1)
-    print(output)
-    assert output == [1, '#', 2, 3, '#', 4, 5, 6, 7, '#']
-
-    node_1 = Node(1)
-    node_2 = Node(2)
-    node_3 = Node(3)
-    node_1.left = node_2
-    node_1.right = node_3
-    sol.connect(node_1)
-    printer = Printer()
-    output = printer.printLevelOrder(node_1)
-    print(output)
-    assert output == [1, '#', 2, 3, '#']
-
-    node_1 = Node(1)
-    sol.connect(node_1)
-    printer = Printer()
-    output = printer.printLevelOrder(node_1)
-    print(output)
-    assert output == [1, '#']
+    assert output == [1, '#', 2, 2, '#', 3, 3, 3, 3, '#', 4, 4, 4, 4, 4, 4, '#', 5, 5, '#']
 
     node_1 = Node(1)
     node_2 = Node(2)
@@ -186,12 +138,47 @@ if __name__ == "__main__":
     node_3.right = node_7
     node_4.left = node_8
     node_7.right = node_9
-
     sol.connect(node_1)
     printer = Printer()
     output = printer.printLevelOrder(node_1)
     print(output)
     assert output == [1, '#', 2, 3, '#', 4, 5, 6, 7, '#', 8, 9, '#']
+
+    node_1 = Node(1)
+    node_2 = Node(2)
+    node_3 = Node(3)
+    node_4 = Node(4)
+    node_5 = Node(5)
+    node_6 = Node(6)
+    node_7 = Node(7)
+    node_1.left = node_2
+    node_1.right = node_3
+    node_2.left = node_4
+    node_2.right = node_5
+    node_3.left = node_6
+    node_3.right = node_7
+
+    sol.connect(node_1)
+    printer = Printer()
+    output = printer.printLevelOrder(node_1)
+    assert output == [1, '#', 2, 3, '#', 4, 5, 6, 7, '#']
+
+    node_1 = Node(1)
+    node_2 = Node(2)
+    node_3 = Node(3)
+    node_1.left = node_2
+    node_1.right = node_3
+    sol.connect(node_1)
+    printer = Printer()
+    output = printer.printLevelOrder(node_1)
+    assert output == [1, '#', 2, 3, '#']
+
+    node_1 = Node(1)
+    sol.connect(node_1)
+    printer = Printer()
+    output = printer.printLevelOrder(node_1)
+    assert output == [1, '#']
+
 
     node_1 = Node(1)
     node_2 = Node(2)
