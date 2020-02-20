@@ -49,29 +49,87 @@ class Solution:
             current = current.left
         return root
 
+class Printer:
+    def __init__(self):
+        self.level_map = {}
 
-def printLevelOrder(node: Node) -> List:
-    # only traverse left side
-    if node is None:
-        return []
+    def printLevelOrder(self, node: Node) -> List:
+        self.populate_level_map(node, 0)
+        output = []
+        # go over the levels
+        for level in self.level_map.values():
+            level_output = []
+            current = level
+            # ever node is a linked list at a level, populate the values into a an output
+            while current is not None:
+                level_output.append(current.val)
+                current = current.next
+            output += level_output
+            output += ['#']
+        return output
 
-    output = []
-    current = node
-    while current is not None:
-        output.append(current.val)
-        current = current.next
+    def populate_level_map(self, node: Node, depth):
+        if node is None:
+            return
 
-    if node.left:
-        level_below_output = printLevelOrder(node.left)
-    else:
-        level_below_output = printLevelOrder(node.right)
-    output += ['#']
-    output += level_below_output
-    return output
+        # only save the first occurrence at the depth,
+        # since if it were to be connected entirely, we can traverse the LL
+        if depth not in self.level_map:
+            self.level_map[depth] = node
+
+        # continue DFS to populate the rest of the map
+        self.populate_level_map(node.left, depth + 1)
+        self.populate_level_map(node.right, depth + 1)
 
 
 if __name__ == "__main__":
     sol = Solution()
+    node_0 = Node(1)
+    node_1 = Node(2)
+    node_2 = Node(2)
+    node_3 = Node(3)
+    node_4 = Node(3)
+    node_5 = Node(3)
+    node_6 = Node(3)
+    node_7 = Node(4)
+    node_8 = Node(4)
+    node_9 = Node(4)
+    node_10 = Node(4)
+    node_11 = Node(4)
+    node_12 = Node(4)
+    node_15 = Node(5)
+    node_16 = Node(5)
+
+    node_0.left = node_1
+    node_0.right = node_2
+
+    node_1.left = node_3
+    node_1.right = node_4
+
+    node_2.left = node_5
+    node_2.right = node_6
+
+    node_3.left = node_7
+    node_3.right = node_8
+
+    node_4.left = node_9
+    node_4.right = node_10
+
+    node_5.left = node_11
+    node_5.right = node_12
+
+    node_7.left = node_15
+    node_7.right = node_16
+
+    printer = Printer()
+    output = printer.printLevelOrder(node_0)
+    print(output)
+    sol.connect(node_1)
+    printer = Printer()
+    output = printer.printLevelOrder(node_0)
+    print(output)
+    exit()
+
 
     node_1 = Node(1)
     node_2 = Node(2)
@@ -88,7 +146,9 @@ if __name__ == "__main__":
     node_3.right = node_7
 
     sol.connect(node_1)
-    output = printLevelOrder(node_1)
+    printer = Printer()
+    output = printer.printLevelOrder(node_1)
+    print(output)
     assert output == [1, '#', 2, 3, '#', 4, 5, 6, 7, '#']
 
     node_1 = Node(1)
@@ -97,12 +157,16 @@ if __name__ == "__main__":
     node_1.left = node_2
     node_1.right = node_3
     sol.connect(node_1)
-    output = printLevelOrder(node_1)
+    printer = Printer()
+    output = printer.printLevelOrder(node_1)
+    print(output)
     assert output == [1, '#', 2, 3, '#']
 
     node_1 = Node(1)
     sol.connect(node_1)
-    output = printLevelOrder(node_1)
+    printer = Printer()
+    output = printer.printLevelOrder(node_1)
+    print(output)
     assert output == [1, '#']
 
     node_1 = Node(1)
@@ -124,7 +188,9 @@ if __name__ == "__main__":
     node_7.right = node_9
 
     sol.connect(node_1)
-    output = printLevelOrder(node_1)
+    printer = Printer()
+    output = printer.printLevelOrder(node_1)
+    print(output)
     assert output == [1, '#', 2, 3, '#', 4, 5, 6, 7, '#', 8, 9, '#']
 
     node_1 = Node(1)
@@ -148,7 +214,9 @@ if __name__ == "__main__":
     node_7.right = node_10
 
     sol.connect(node_1)
-    output = printLevelOrder(node_1)
+    printer = Printer()
+    output = printer.printLevelOrder(node_1)
+    print(output)
     assert output == [1, '#', 2, 3, '#', 4, 5, 6, 7, '#', 8, 9, 10, '#']
 
     node_1 = Node(1)
@@ -162,5 +230,7 @@ if __name__ == "__main__":
     node_4.right = node_5
 
     sol.connect(node_1)
-    output = printLevelOrder(node_1)
+    printer = Printer()
+    output = printer.printLevelOrder(node_1)
+    print(output)
     assert output == [1, '#', 2, '#', 3, '#', 4, '#', 5, '#']
