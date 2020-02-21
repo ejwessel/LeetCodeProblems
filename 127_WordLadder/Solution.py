@@ -4,7 +4,7 @@ from collections import deque
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         queue = deque()
-        queue.append([beginWord, 1])
+        queue.append((beginWord, 1))
         while queue:
             current = queue.popleft()
             # check if we found the word
@@ -17,7 +17,8 @@ class Solution:
                 if self.isDistanceOne(wordList[i], current[0]):
                     queue.append((wordList[i], current[1] + 1))
                     # don't increment 1 here because the list is reduced by 1
-                    wordList.pop(i)
+                    wordList[i] = wordList[-1]
+                    wordList.pop()
                 else:
                     i += 1
         return 0
