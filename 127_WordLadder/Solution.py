@@ -1,10 +1,12 @@
 from typing import List
+from collections import deque
 
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        queue = [(beginWord, 1)]
+        queue = deque()
+        queue.append([beginWord, 1])
         while queue:
-            current = queue.pop(0)
+            current = queue.popleft()
             # check if we found the word
             if current[0] == endWord:
                 return current[1]
