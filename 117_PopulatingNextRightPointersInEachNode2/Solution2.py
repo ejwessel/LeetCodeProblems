@@ -39,10 +39,10 @@ class Solution:
                 # It's possible that nothing is linked and therefore we need to move forward
                 if current.left:
                     prev.next = current.left
-                    prev = prev.next
+                    break
                 elif current.right:
                     prev.next = current.right
-                    prev = prev.next
+                    break
 
             current = current.next
 
@@ -118,7 +118,6 @@ if __name__ == "__main__":
     sol.connect(node_0)
     printer = Printer()
     output = printer.printLevelOrder(node_0)
-    print(output)
     assert output == [1, '#', 2, 2, '#', 3, 3, 3, 3, '#', 4, 4, 4, 4, 4, 4, '#', 5, 5, '#']
 
     node_1 = Node(1)
@@ -141,7 +140,6 @@ if __name__ == "__main__":
     sol.connect(node_1)
     printer = Printer()
     output = printer.printLevelOrder(node_1)
-    print(output)
     assert output == [1, '#', 2, 3, '#', 4, 5, 6, 7, '#', 8, 9, '#']
 
     node_1 = Node(1)
@@ -203,7 +201,6 @@ if __name__ == "__main__":
     sol.connect(node_1)
     printer = Printer()
     output = printer.printLevelOrder(node_1)
-    print(output)
     assert output == [1, '#', 2, 3, '#', 4, 5, 6, 7, '#', 8, 9, 10, '#']
 
     node_1 = Node(1)
@@ -219,5 +216,4 @@ if __name__ == "__main__":
     sol.connect(node_1)
     printer = Printer()
     output = printer.printLevelOrder(node_1)
-    print(output)
     assert output == [1, '#', 2, '#', 3, '#', 4, '#', 5, '#']
