@@ -22,6 +22,16 @@ class Solution:
                     self.minTriangle(tri, depth + 1, i, current_sum + value)
 
 if __name__ == "__main__":
+
+    input = [
+        [2],
+        [3,4],
+        [6,5,7],
+        [4,1,8,3]
+    ]
+    for i in reversed(range(0, len(input))):
+        print(i)
+
     input = [
         [2],
         [3,4],
@@ -48,7 +58,13 @@ if __name__ == "__main__":
     assert result == 2
 
     input = [
+        [2],
+        [3, 4],
+        [6, 5, 7],
+        [4, 1, 8, 3],
+        [-3, 2, 7, 2, 10],
+        [9, 4, 7, 12, -8, -2]
     ]
     sol = Solution()
     result = sol.minimumTotal(input)
-    assert result == 2
+    assert result == 10
