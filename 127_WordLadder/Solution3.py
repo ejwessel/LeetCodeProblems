@@ -36,10 +36,11 @@ class Solution:
                 key = b_current[:i] + '*' + b_current[i + 1:]
                 for prospective_word in b_word_combo[key]:
                     # only add words to queue we haven't seen before
-                    if prospective_word not in visited:
-                        b_q.append((prospective_word, b_depth + 1))
-                    else:
-                        return b_depth + visited[prospective_word]
+                    if prospective_word is not b_current:
+                        if prospective_word not in visited:
+                            b_q.append((prospective_word, b_depth + 1))
+                        else:
+                            return b_depth + visited[prospective_word]
                 # after adding everything zero out the list so that we can ignore it
                 b_word_combo[key] = []
 
@@ -47,10 +48,11 @@ class Solution:
                 key = e_current[:i] + '*' + e_current[i + 1:]
                 for prospective_word in e_word_combo[key]:
                     # only add words to queue we haven't seen before
-                    if prospective_word not in visited:
-                        e_q.append((prospective_word, e_depth + 1))
-                    else:
-                        return e_depth + visited[prospective_word]
+                    if prospective_word is not e_current:
+                        if prospective_word not in visited:
+                            e_q.append((prospective_word, e_depth + 1))
+                        else:
+                            return e_depth + visited[prospective_word]
                 # after adding everything zero out the list so that we can ignore it
                 e_word_combo[key] = []
 
@@ -69,7 +71,6 @@ if __name__ == "__main__":
     end = 'cog'
     wordList = ['hot', 'dot', 'dog', 'lot', 'log', 'cog']
     result = sol.ladderLength(begin, end, wordList)
-    print(result)
     assert result == 5
 
     sol = Solution()
