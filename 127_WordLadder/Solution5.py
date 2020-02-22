@@ -3,13 +3,12 @@ from collections import defaultdict, deque
 
 
 class Solution:
-    def get_all_combos(self, wordList):
+    def get_word_combo(self, wordList):
         all_word_combo = defaultdict(list)
         for word in wordList:
             for i in range(len(word)):
                 key = word[:i] + '*' + word[i + 1:]
                 all_word_combo[key].append(word)
-
         return all_word_combo
 
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
@@ -17,57 +16,42 @@ class Solution:
         if endWord not in wordList:
             return 0
 
-        all_word_combo = self.get_all_combos(wordList)
+        all_word_combo = self.get_word_combo(wordList)
 
         b_q = deque()
-        e_q = deque()
-
         b_q.append((beginWord, 1))
+        e_q = deque()
         e_q.append((endWord, 1))
 
-        b_visited = {}
-        e_visited = {}
+        b_visited = {beginWord: 1}
+        e_visited = {endWord: 1}
 
         while b_q and e_q:
             b_current, b_depth = b_q.popleft()
             e_current, e_depth = e_q.popleft()
 
-            if b_current in e_visited:
-                return b_depth + e_visited[b_current] - 1
-            if e_current in b_visited:
-                return e_depth + b_visited[e_current] - 1
-
-            # mark nodes we visited
-            b_visited[b_current] = b_depth
-            e_visited[e_current] = e_depth
-
             for i in range(len(b_current)):
                 key = b_current[:i] + '*' + b_current[i + 1:]
                 for prospective_word in all_word_combo[key]:
+                    if prospective_word in e_visited:
+                        return b_depth + e_visited[prospective_word]
                     if prospective_word not in b_visited:
+                        b_visited[prospective_word] = b_depth + 1
                         b_q.append((prospective_word, b_depth + 1))
 
             for i in range(len(e_current)):
                 key = e_current[:i] + '*' + e_current[i + 1:]
                 for prospective_word in all_word_combo[key]:
+                    if prospective_word in b_visited:
+                        return e_depth + b_visited[prospective_word]
                     if prospective_word not in e_visited:
+                        e_visited[prospective_word] = e_depth + 1
                         e_q.append((prospective_word, e_depth + 1))
 
         return 0
 
 
 if __name__ == "__main__":
-    # sol = Solution()
-    # result = sol.isDistanceOne('hot', 'dog')
-    # assert not result
-    # result = sol.isDistanceOne('hot', 'hog')
-    # assert result
-    sol = Solution()
-    begin = "lost"
-    end = "cost"
-    wordList = ["most", "fist", "lost", "cost", "fish"]
-    result = sol.ladderLength(begin, end, wordList)
-    assert result == 2
 
     sol = Solution()
     begin = 'hit'
@@ -75,13 +59,6 @@ if __name__ == "__main__":
     wordList = ['hot', 'dot', 'dog', 'lot', 'log', 'cog']
     result = sol.ladderLength(begin, end, wordList)
     assert result == 5
-
-    sol = Solution()
-    begin = "hot"
-    end = "dog"
-    wordList = ["hot", "dog", "cog", "pot", "dot"]
-    result = sol.ladderLength(begin, end, wordList)
-    assert result == 3
 
     sol = Solution()
     begin = "a"
