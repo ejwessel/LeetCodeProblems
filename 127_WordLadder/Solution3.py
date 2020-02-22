@@ -24,36 +24,32 @@ class Solution:
 
         b_q.append((beginWord, 1))
         e_q.append((endWord, 1))
-
-        b_visited = {}
-        e_visited = {}
+        # add the current first nodes since they're seen an in the queue
+        b_seen = {beginWord: 1}
+        e_seen = {endWord: 1}
 
         while b_q and e_q:
-            b_current, b_depth = b_q.popleft()
-            e_current, e_depth = e_q.popleft()
-
-            if b_current in e_visited:
-                return b_depth + e_visited[b_current] - 1
-            if e_current in b_visited:
-                return e_depth + b_visited[e_current] - 1
-
-            # mark nodes we visited
-            b_visited[b_current] = b_depth
-            e_visited[e_current] = e_depth
-
-            for i in range(len(b_current)):
-                key = b_current[:i] + '*' + b_current[i + 1:]
-                for prospective_word in all_word_combo[key]:
-                    if prospective_word not in b_visited:
-                        b_q.append((prospective_word, b_depth + 1))
-
-            for i in range(len(e_current)):
-                key = e_current[:i] + '*' + e_current[i + 1:]
-                for prospective_word in all_word_combo[key]:
-                    if prospective_word not in e_visited:
-                        e_q.append((prospective_word, e_depth + 1))
-
+            result = self.bfs_traverse(all_word_combo, b_q, b_seen, e_seen)
+            if result:
+                return result
+            result = self.bfs_traverse(all_word_combo, e_q, e_seen, b_seen)
+            if result:
+                return result
         return 0
+
+    def bfs_traverse(self, all_word_combo, queue, queue_visited, other_visited):
+        current, depth = queue.popleft()
+        for i in range(len(current)):
+            key = current[:i] + '*' + current[i + 1:]
+            for prospective_word in all_word_combo[key]:
+                if prospective_word in other_visited:
+                    return depth + other_visited[prospective_word]
+                # if we haven't seen the word then queue and mark it
+                if prospective_word not in queue_visited:
+                    queue.append((prospective_word, depth + 1))
+                    # +1 because it's a depth more than current
+                    queue_visited[prospective_word] = depth + 1
+        return None
 
 
 if __name__ == "__main__":
