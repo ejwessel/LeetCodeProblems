@@ -8,3 +8,21 @@ Runtime: O(mn^2)
 
 Space: O(n)
 - It's possible the entirety of the word list can exist in the queue
+
+I had a very difficult time with the bidirectional solution. 
+It had mainly to do with when to mark a node visited and when it's solution should be returned.
+
+I narrowed it down to two methods:
+When should we add to queue based off other queue?
+1. check before adding to queue if other node has seen some node
+2. check when visiting if other node has seen node
+
+Method 1 works because the depth is available at the time it's discovered
+Method 2 doesn't work because I could be visiting a node late instead of earlier in the discovery
+
+Bidirectional Runtime: O(b^d)
+- branching factor is unknown for a given known
+- total depth is unknown but search space only need to go through half the graph for each node
+
+Bidirectional Space: O(b^d)
+- possibly need to keep all the potential branches in memory
