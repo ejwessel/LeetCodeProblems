@@ -15,9 +15,6 @@ class Solution:
             left_sub = s[:i]
             right_sub = s[i:]
 
-            if left_sub is '':
-                continue
-
             # if the left is not a palindrome, there is no work
             if not self.is_palindrome(left_sub):
                 continue
