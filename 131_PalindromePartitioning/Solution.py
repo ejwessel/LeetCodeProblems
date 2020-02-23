@@ -2,7 +2,7 @@ class Solution:
     def __init__(self):
         self.solutions = []
         self.temp_sol = []
-        self.known_palindromes = set()
+        self.known_palindromes = {}
 
     def partition(self, s: str):
         if not s:
@@ -25,12 +25,13 @@ class Solution:
 
     def isPalindrome(self, s):
         if s in self.known_palindromes:
-            return True
+            return self.known_palindromes[s]
 
         for i in range(int(len(s) / 2)):
             if s[i] != s[len(s) - 1 - i]:
+                self.known_palindromes[s] = False
                 return False
-        self.known_palindromes.add(s)
+        self.known_palindromes[s] = True
         return True
 
 if __name__ == "__main__":
