@@ -3,7 +3,7 @@ from collections import defaultdict
 class Solution:
     def __init__(self):
         self.palindrome = {}
-        self.memo = defaultdict(list) # will contain lists of all the possible partitions
+        self.memo = defaultdict(list)  # will contain lists of all the possible partitions
 
     def partition(self, s: str):
         self._partition(s)
@@ -22,9 +22,9 @@ class Solution:
                 continue
             self.palindrome[left_sub] = True
 
-            # if the right is the end of the string
+            # we've reached the last element that could be processed. Add it
             if right_sub is '':
-                self.memo[left_sub].append([left_sub])
+                self.memo[s].append([left_sub])
                 continue
 
             # if the right sub is not computed, then attempt to compute it
@@ -35,14 +35,10 @@ class Solution:
             if right_sub in self.memo:
                 partitions = self.memo[right_sub]
                 for partition in partitions:
-                    temp_list = [left_sub]
-                    for elements in partition:
-                        temp_list.append(elements)
-                    self.memo[s].append(temp_list)
+                    self.memo[s].append([left_sub] + partition)
 
 
 if __name__ == "__main__":
-
     sol = Solution()
     result = sol.partition("aab")
     assert result == [['a', 'a', 'b'], ['aa', 'b']]
@@ -58,3 +54,7 @@ if __name__ == "__main__":
     sol = Solution()
     result = sol.partition("")
     assert result == []
+
+    sol = Solution()
+    result = sol.partition("fff")
+    assert result == [["f", "f", "f"], ["f", "ff"], ["ff", "f"], ["fff"]]
