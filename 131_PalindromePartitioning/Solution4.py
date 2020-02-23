@@ -23,7 +23,6 @@ class Solution:
 
             self.palindrome[left_sub] = True
 
-
             # if the right is the end of the string
             if right_sub is '':
                 self.memo[left_sub].append([left_sub])
