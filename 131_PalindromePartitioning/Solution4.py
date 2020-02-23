@@ -20,7 +20,6 @@ class Solution:
             if not is_palindrome:
                 self.palindrome[left_sub] = False
                 continue
-
             self.palindrome[left_sub] = True
 
             # if the right is the end of the string
