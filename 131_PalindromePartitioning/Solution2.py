@@ -2,7 +2,7 @@ from collections import defaultdict
 
 class Solution:
     def __init__(self):
-        self.known_palindromes = {}
+        self.known_palindromes = {} # mapping of seen substrings that we can determine are palindromes or not
         self.memo = defaultdict(list) # will contain lists of all the possible partitions
 
     def partition(self, s: str):
@@ -24,9 +24,11 @@ class Solution:
                 self.memo[left_sub].append([left_sub])
                 continue
 
+            # if the right sub is not computed, then attempt to compute it
             if right_sub not in self.memo:
                 self._partition(right_sub)
 
+            # right sub still may not have a solution and therefore we can ignore it
             if right_sub in self.memo:
                 partitions = self.memo[right_sub]
                 for partition in partitions:
