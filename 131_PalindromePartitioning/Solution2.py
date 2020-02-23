@@ -3,38 +3,42 @@ from collections import defaultdict
 class Solution:
     def __init__(self):
         self.known_palindromes = {}
-        self.memo = defaultdict(list)
+        self.memo = defaultdict(list) # will contain lists of all the possible partitions
 
     def partition(self, s: str):
-        return self._parition(s, 0, len(s))
+        self._partition(s)
+        return self.memo[s]
 
-    def _parition(self, string, begin, end):
-        if begin >= end:
-            return []
-        else:
-            for i in range(begin, end):
-                left_range = (begin, i)
-                right_range = (i, end)
-                sub_left = string[begin: i]
-                right_sub = string[i: end]
+    def _partition(self, s: str):
+        # start at 1 and go 1 past the end because otherwise '' is looked at on the left side and it's a wasted cycle
+        for i in range(1, len(s) + 1):
+            left_sub = s[:i]
+            right_sub = s[i:]
 
-                if sub_left is '':
-                    continue
+            if left_sub is '':
+                continue
 
-                if right_range in self.memo:
-                    right_partitions = self.memo[right_range]
-                    for right in right_partitions:
-                        self.memo[left_range].append([sub_left + right])
-                else:
-                    if self.isPalindrome(sub_left):
-                        right_partitions = self._parition(string, i, end)
-                        for right in right_partitions:
-                            self.memo[left_range].append([sub_left + right])
+            # if the left is not a palindrome, there is no work
+            if not self.is_palindrome(left_sub):
+                continue
 
-            return self.memo[left_range]
+            # if the right is the end of the string
+            if right_sub is '':
+                self.memo[left_sub].append([left_sub])
+                continue
 
+            if right_sub not in self.memo:
+                self._partition(right_sub)
 
-    def isPalindrome(self, s):
+            if right_sub in self.memo:
+                partitions = self.memo[right_sub]
+                for partition in partitions:
+                    temp_list = [left_sub]
+                    for elements in partition:
+                        temp_list.append(elements)
+                    self.memo[s].append(temp_list)
+
+    def is_palindrome(self, s):
         if s in self.known_palindromes:
             return self.known_palindromes[s]
 
@@ -47,15 +51,17 @@ class Solution:
 
 if __name__ == "__main__":
 
+    # sol = Solution()
+    # result = sol.is_palindrome("abba")
+    # assert result
+    # result = sol.is_palindrome("abb")
+    # assert not result
     sol = Solution()
-    result = sol.isPalindrome("abba")
-    assert result
-    result = sol.isPalindrome("abb")
-    assert not result
+    result = sol.partition("a")
+    assert result == [['a']]
 
     sol = Solution()
     result = sol.partition("aab")
-    print(result)
     assert result == [['a', 'a', 'b'], ['aa', 'b']]
 
     sol = Solution()
@@ -63,9 +69,9 @@ if __name__ == "__main__":
     assert result == [['a', 'b', 'b', 'a', 'c'], ['a', 'bb', 'a', 'c'], ['abba', 'c']]
 
     sol = Solution()
-    result = sol.partition("a")
-    assert result == [['a']]
-
-    sol = Solution()
     result = sol.partition("")
     assert result == []
+
+    sol = Solution()
+    result = sol.partition("abba")
+    assert result == [['a', 'b', 'b', 'a'], ['a', 'bb', 'a'], ['abba']]
