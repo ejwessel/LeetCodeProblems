@@ -41,6 +41,7 @@ class Solution:
                         temp_list.append(elements)
                     self.memo[s].append(temp_list)
 
+
 if __name__ == "__main__":
 
     sol = Solution()
