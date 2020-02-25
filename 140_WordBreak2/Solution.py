@@ -7,13 +7,7 @@ class Solution:
 
     def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
         self._wordBreakHelper(s, wordDict)
-        # turn the solutions into strings
-        output = []
-        if s in self.memo:
-            for sol in self.memo[s]:
-                string_representation = ' '.join(sol)
-                output.append(string_representation)
-        return output
+        return self.memo[s]
 
     def _wordBreakHelper(self, s: str, wordDict: List[str]):
         for i in range(1, len(s) + 1):
@@ -27,7 +21,7 @@ class Solution:
             # if the right sub is the end of the string save it
             if right_sub is '':
                 # needs to be added as a list
-                self.memo[s].append([left_sub])
+                self.memo[s].append(left_sub)
                 continue
 
             # perform analysis on the right substring if it doesn't exist
@@ -40,7 +34,7 @@ class Solution:
 
             # combine the solutions with left
             for strings in self.memo[right_sub]:
-                self.memo[s].append([left_sub] + strings)
+                self.memo[s].append(left_sub + ' ' + strings)
 
 
 
