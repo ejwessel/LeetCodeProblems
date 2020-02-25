@@ -29,7 +29,7 @@ class Solution:
             end -= 1
         return True
 
-    def isPalindrome(self, s: str) -> bool:
+    def isPalindrome_faster(self, s: str) -> bool:
         begin = 0
         end = len(s) - 1
         while begin < end:
@@ -51,6 +51,16 @@ class Solution:
             begin += 1
             end -= 1
         return True
+
+    def isPalindrome(self, s: str) -> bool:
+        adjusted_string = ''
+        for char in s:
+            if char.isalnum():
+                adjusted_string += char.lower()
+
+        return adjusted_string == adjusted_string[::-1]
+
+
 
 
 if __name__ == "__main__":
