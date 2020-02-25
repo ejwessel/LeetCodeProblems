@@ -28,10 +28,6 @@ class Solution:
             if right_sub not in self.memo:
                 self._wordBreakHelper(right_sub, wordDict)
 
-            # if the right word is still not available then no solutions to add
-            if right_sub not in self.memo:
-                continue
-
             # combine the solutions with left
             for strings in self.memo[right_sub]:
                 self.memo[s].append(left_sub + ' ' + strings)
@@ -58,8 +54,8 @@ if __name__ == "__main__":
     result = sol.wordBreak(s, wordDict)
     assert result == []
 
-    # s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    # wordDict = ["a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"]
-    # sol = Solution()
-    # result = sol.wordBreak(s, wordDict)
-    # print(result)
+    s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    wordDict = ["a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"]
+    sol = Solution()
+    result = sol.wordBreak(s, wordDict)
+    assert result == []
