@@ -10,6 +10,10 @@ class Solution:
         return self.memo[s]
 
     def _wordBreakHelper(self, s: str, wordDict: List[str]):
+        if s is '':
+            self.memo[s].append(s)
+            return
+
         for i in range(1, len(s) + 1):
             left_sub = s[:i]
             right_sub = s[i:]
@@ -18,19 +22,16 @@ class Solution:
             if left_sub not in wordDict:
                 continue
 
-            # if the right sub is the end of the string save it
-            if right_sub is '':
-                # needs to be added as a list
-                self.memo[s].append(left_sub)
-                continue
-
             # perform analysis on the right substring if it doesn't exist
             if right_sub not in self.memo:
                 self._wordBreakHelper(right_sub, wordDict)
 
             # combine the solutions with left
-            for strings in self.memo[right_sub]:
-                self.memo[s].append(left_sub + ' ' + strings)
+            for string in self.memo[right_sub]:
+                if string is '':
+                    self.memo[s].append(left_sub)
+                else:
+                    self.memo[s].append(left_sub + ' ' + string)
 
 
 
