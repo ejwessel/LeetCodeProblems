@@ -1,4 +1,5 @@
 from typing import List
+
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, x):
@@ -7,12 +8,33 @@ class TreeNode:
         self.right = None
 
 class Solution:
+    def preorderTraversal_tuple(self, root: TreeNode) -> List[int]:
+        output = []
+        stack = [(root, 'left')]
+
+        while stack:
+            current, dir = stack.pop()
+            if not current:
+                continue
+            if dir == 'left':
+                output.append(current.val)
+                stack.append((current, 'right'))
+                stack.append((current.left, 'left'))
+            else:
+                stack.append((current.right, 'left'))
+        return output
+
     def preorderTraversal(self, root: TreeNode) -> List[int]:
-        if not root:
-            return []
-        left_output = self.preorderTraversal(root.left)
-        right_output = self.preorderTraversal(root.right)
-        return [root.val] + left_output + right_output
+        stack = [root]
+        output = []
+        while stack:
+            current = stack.pop()
+            if not current:
+                continue
+            output.append(current.val)
+            stack.append(current.right)
+            stack.append(current.left)
+        return output
 
 if __name__ == "__main__":
     sol = Solution()
