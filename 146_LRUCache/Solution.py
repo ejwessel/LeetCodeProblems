@@ -159,6 +159,7 @@ class LRUCache:
 
 def linkedlists_tests():
     linked_list = LinkedList()
+    assert linked_list.size == 0
     new_node_5 = Node(5)
     linked_list.insertHead(new_node_5)
     new_node_4 = Node(4)
@@ -167,11 +168,15 @@ def linkedlists_tests():
     linked_list.insertHead(new_node_3)
     new_node_1 = Node(1)
     linked_list.insertHead(new_node_1)
+    assert linked_list.tail == new_node_5
+    assert linked_list.head == new_node_1
     assert linked_list.size == 4
     output = print_linkedlist(linked_list.head)
     assert output == [1, 3, 4, 5]
 
     node_removed = linked_list.removeTail()
+    assert linked_list.tail == new_node_4
+    assert linked_list.head == new_node_1
     assert node_removed == new_node_5
     output = print_linkedlist(linked_list.head)
     assert output == [1, 3, 4]
@@ -185,6 +190,8 @@ def linkedlists_tests():
     node_removed = linked_list.removeTail() # won't provide anything if nothing to remove
     assert node_removed is None
     assert linked_list.size == 0
+    assert linked_list.head == None
+    assert linked_list.tail == None
     output = print_linkedlist(linked_list.head)
     assert output == []
 
