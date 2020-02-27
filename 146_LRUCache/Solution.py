@@ -70,11 +70,15 @@ class Bidict:
         self.val_to_key[val] = key
 
     def remove_key(self, key):
+        if key not in self.key_to_val:
+            return
         value = self.key_to_val[key]
         del self.key_to_val[key]
         del self.val_to_key[value]
 
     def remove_val(self, val):
+        if val not in self.val_to_key:
+            return
         key = self.val_to_key[val]
         del self.val_to_key[val]
         del self.key_to_val[key]
@@ -137,6 +141,14 @@ if __name__ == "__main__":
     contains = bidict.contains_val("hello")
     assert contains
     contains = bidict.contains_val("hello0")
+    assert not contains
+    bidict.remove_key(5)
+    contains = bidict.contains_key(5)
+    assert not contains
+    contains = bidict.contains_val("hello")
+    assert not contains
+    bidict.remove_key(6)
+    contains = bidict.contains_key(56)
     assert not contains
 
 # Your LRUCache object will be instantiated and called as such:
