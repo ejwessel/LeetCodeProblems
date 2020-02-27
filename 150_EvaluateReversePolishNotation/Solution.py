@@ -11,7 +11,8 @@ class Solution:
         if not tokens:
             return None
         s = []
-        while tokens:
+        # as long as there are tokens to add or we have yet to fully evaluate the stack continue
+        while tokens or len(s) > 2:
             if len(s) > 2 and self.is_numeric(s[len(s) - 1]) and self.is_numeric(s[len(s) - 2]):
                 # problem checking that the last two digits are integers
                 param1 = int(s.pop())
@@ -27,19 +28,6 @@ class Solution:
                     s.append(str(param1 - param2))
             else:
                 s.append(tokens.pop())
-
-        while len(s) > 2:
-            param1 = int(s.pop())
-            param2 = int(s.pop())
-            operator = s.pop()
-            if operator == "+":
-                s.append(str(param1 + param2))
-            elif operator == "*":
-                s.append(str(param1 * param2))
-            elif operator == "/":
-                s.append(str(int(param1 / param2)))
-            elif operator == "-":
-                s.append(str(param1 - param2))
 
         return int(s[0])
 
