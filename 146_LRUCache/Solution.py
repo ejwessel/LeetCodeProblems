@@ -94,14 +94,70 @@ class LRUCache:
 
     def __init__(self, capacity: int):
         self.capacity = capacity
-        self.linkedlist = LinkedList()
-        self.nodes = {}
+        self.linked_list = LinkedList()
+        self.nodes = Bidict()
 
     def get(self, key: int) -> int:
-        pass
+        if not self.nodes.contains_key(key):
+            return -1
+        node_to_move = self.nodes.key_to_val[key]
+
+        if node_to_move == self.linked_list.head:
+            return node_to_move.val
+        elif node_to_move == self.linked_list.tail:
+            self.linked_list.tail = self.linked_list.tail.prev
+            self.linked_list.tail.next = None
+            node_to_move.prev = None
+            self.linked_list.insertHead(node_to_move)
+            return node_to_move.val
+        else:
+            # link prev and next together
+            node_to_move.prev.next = node_to_move.next
+            node_to_move.next.prev = node_to_move.prev
+            # disconnect the node
+            node_to_move.next = None
+            node_to_move.prev = None
+            # insert it into the beginning
+            self.linked_list.insertHead(node_to_move)
+            return node_to_move.val
 
     def put(self, key: int, value: int) -> None:
-        pass
+        if key in self.nodes.key_to_val:
+            # update the value
+            node_to_move = self.nodes.key_to_val[key]
+            node_to_move.val = value
+
+            # move the node to the beginning
+            # if this node is a the beginning do nothing
+            if node_to_move == self.linked_list.head:
+                return
+            # if the node is at the end update the tail
+            elif node_to_move == self.linked_list.tail:
+                self.linked_list.tail = self.linked_list.tail.prev
+                self.linked_list.tail.next = None
+                node_to_move.prev = None
+                self.linked_list.insertHead(node_to_move)
+            # if the node is anywhere else
+            else:
+                # link prev and next together
+                node_to_move.prev.next = node_to_move.next
+                node_to_move.next.prev = node_to_move.prev
+                # disconnect the node
+                node_to_move.next = None
+                node_to_move.prev = None
+                # insert it into the beginning
+                self.linked_list.insertHead(node_to_move)
+        else:
+            # insert
+            new_node = Node(value)
+            self.nodes.insert(key, new_node)
+            self.linked_list.insertHead(new_node)
+
+            # check if we need to evict
+            if self.linked_list.size > self.capacity:
+                removed_node = self.linked_list.removeTail()
+                self.nodes.remove_val(removed_node)
+
 
 if __name__ == "__main__":
     linked_list = LinkedList()
@@ -150,6 +206,39 @@ if __name__ == "__main__":
     bidict.remove_key(6)
     contains = bidict.contains_key(56)
     assert not contains
+
+    lru_cache = LRUCache(4)
+    result = lru_cache.get(5)
+    assert result == -1
+    lru_cache.put(5, 4)
+    result = lru_cache.get(5)
+    assert result == 4
+    lru_cache.put(5, 3)
+    result = lru_cache.get(5)
+    assert result == 3
+    size = lru_cache.linked_list.size
+    assert size == 1
+    lru_cache.put(3, 2)
+    result = lru_cache.get(3)
+    assert result == 2
+    size = lru_cache.linked_list.size
+    assert size == 2
+    output = print_linkedlist(lru_cache.linked_list.head)
+    assert output == [2, 3]
+    lru_cache.get(5)
+    output = print_linkedlist(lru_cache.linked_list.head)
+    assert output == [3, 2]
+
+    lru_cache = LRUCache(4)
+    lru_cache.put(1, 5)
+    lru_cache.put(2, 4)
+    lru_cache.put(3, 3)
+    lru_cache.put(4, 2)
+    output = print_linkedlist(lru_cache.linked_list.head)
+    assert output == [2, 3, 4, 5]
+    lru_cache.put(5, 1)
+    output = print_linkedlist(lru_cache.linked_list.head)
+    assert output == [1, 2, 3, 4]
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)
