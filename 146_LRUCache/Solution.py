@@ -4,6 +4,7 @@ class Node:
         self.prev = None
         self.next = None
 
+
 class LinkedList:
     def __init__(self):
         self.head = None
@@ -60,34 +61,26 @@ def print_linkedlist(head: Node):
         current = current.next
     return output
 
+
 class Bidict:
     def __init__(self):
         self.key_to_val = {}
         self.val_to_key = {}
 
     def insert(self, key, val):
+        self.remove_key(key)
         self.key_to_val[key] = val
         self.val_to_key[val] = key
 
     def remove_key(self, key):
+        """
+        remove should be unidirectional
+        """
         if key not in self.key_to_val:
             return
         value = self.key_to_val[key]
         del self.key_to_val[key]
         del self.val_to_key[value]
-
-    def remove_val(self, val):
-        if val not in self.val_to_key:
-            return
-        key = self.val_to_key[val]
-        del self.val_to_key[val]
-        del self.key_to_val[key]
-
-    def contains_key(self, key):
-        return key in self.key_to_val
-
-    def contains_val(self, val):
-        return val in self.val_to_key
 
 
 class LRUCache:
@@ -97,7 +90,7 @@ class LRUCache:
         self.nodes = Bidict()
 
     def get(self, key: int) -> int:
-        if not self.nodes.contains_key(key):
+        if key not in self.nodes.key_to_val:
             return -1
         node_to_move = self.nodes.key_to_val[key]
 
@@ -155,7 +148,9 @@ class LRUCache:
             # check if we need to evict
             if self.linked_list.size > self.capacity:
                 removed_node = self.linked_list.removeTail()
-                self.nodes.remove_val(removed_node)
+                key_to_remove = self.nodes.val_to_key[removed_node]
+                self.nodes.remove_key(key_to_remove)
+
 
 def linkedlists_tests():
     linked_list = LinkedList()
@@ -187,7 +182,7 @@ def linkedlists_tests():
     assert node_removed == new_node_3
     node_removed = linked_list.removeTail()
     assert node_removed == new_node_1
-    node_removed = linked_list.removeTail() # won't provide anything if nothing to remove
+    node_removed = linked_list.removeTail()  # won't provide anything if nothing to remove
     assert node_removed is None
     assert linked_list.size == 0
     assert linked_list.head is None
@@ -195,32 +190,36 @@ def linkedlists_tests():
     output = print_linkedlist(linked_list.head)
     assert output == []
 
+
 def bidict_tests():
     bidict = Bidict()
     bidict.insert(5, "hello")
-    contains = bidict.contains_key(5)
-    assert contains
-    contains = bidict.contains_key(6)
-    assert not contains
-    contains = bidict.contains_val("hello")
-    assert contains
-    contains = bidict.contains_val("hello0")
-    assert not contains
+    assert 5 in bidict.key_to_val
+    assert 6 not in bidict.key_to_val
+    assert "hello" in bidict.val_to_key
+    assert "helloo" not in bidict.val_to_key
     bidict.remove_key(5)
-    contains = bidict.contains_key(5)
-    assert not contains
-    contains = bidict.contains_val("hello")
-    assert not contains
+    assert 5 not in bidict.key_to_val
+    assert "hello" not in bidict.val_to_key
     bidict.remove_key(6)
-    contains = bidict.contains_key(56)
-    assert not contains
+    assert 56 not in bidict.key_to_val
+    bidict.insert(1, 1)
+    bidict.insert(2, 2)
+    bidict.insert(3, 3)
+    bidict.insert(4, 4)
+    bidict.insert(1, 5)
+    assert 1 in bidict.key_to_val
+    assert 2 in bidict.key_to_val
+    assert 3 in bidict.key_to_val
+    assert 4 in bidict.key_to_val
+    assert 1 not in bidict.val_to_key
+    assert 2 in bidict.val_to_key
+    assert 3 in bidict.val_to_key
+    assert 4 in bidict.val_to_key
+    assert 5 in bidict.val_to_key
 
 
-if __name__ == "__main__":
-
-    linkedlists_tests()
-    bidict_tests()
-
+def lrucache_tests():
     lru_cache = LRUCache(4)
     result = lru_cache.get(5)
     assert result == -1
@@ -260,7 +259,7 @@ if __name__ == "__main__":
     assert cache.get(1) == 1
     output = print_linkedlist(cache.linked_list.head)
     assert output == [1, 2]
-    cache.put(3, 3); # evicts key 2
+    cache.put(3, 3);  # evicts key 2
     output = print_linkedlist(cache.linked_list.head)
     assert output == [3, 1]
     assert cache.get(2) == -1
@@ -271,7 +270,8 @@ if __name__ == "__main__":
     assert cache.get(3) == 3
     assert cache.get(4) == 4
 
-# Your LRUCache object will be instantiated and called as such:
-# obj = LRUCache(capacity)
-# param_1 = obj.get(key)
-# obj.put(key,value)
+if __name__ == "__main__":
+    linkedlists_tests()
+    bidict_tests()
+    lrucache_tests()
+
