@@ -90,6 +90,11 @@ class LRUCache:
         self.nodes = Bidict()
 
     def get(self, key: int) -> int:
+        """
+        no updates to keys need to happen here. The queried node (should it exist) should be moved to the front
+        :param key:
+        :return:
+        """
         if key not in self.nodes.key_to_val:
             return -1
         node_to_move = self.nodes.key_to_val[key]
@@ -114,10 +119,18 @@ class LRUCache:
             return node_to_move.val
 
     def put(self, key: int, value: int) -> None:
+        """
+        The queried node (should it exist) value will be updated and moved to the front
+        If the node doesn't exist then it will be added to the front.
+        If the length of the list goes over capacity then the last node is evicted
+        :param key:
+        :param value:
+        :return:
+        """
         if key in self.nodes.key_to_val:
-            # update the value
             node_to_move = self.nodes.key_to_val[key]
             node_to_move.val = value
+            self.nodes.insert(key, node_to_move)
 
             # move the node to the beginning
             # if this node is a the beginning do nothing
@@ -139,13 +152,14 @@ class LRUCache:
                 node_to_move.prev = None
                 # insert it into the beginning
                 self.linked_list.insertHead(node_to_move)
+        # if the the key value pair is new
         else:
             # insert
             new_node = Node(value)
             self.nodes.insert(key, new_node)
             self.linked_list.insertHead(new_node)
 
-            # check if we need to evict
+            # check if we need to evict the last node
             if self.linked_list.size > self.capacity:
                 removed_node = self.linked_list.removeTail()
                 key_to_remove = self.nodes.val_to_key[removed_node]
@@ -221,19 +235,15 @@ def bidict_tests():
 
 def lrucache_tests():
     lru_cache = LRUCache(4)
-    result = lru_cache.get(5)
-    assert result == -1
+    assert lru_cache.get(5) == -1
     lru_cache.put(5, 4)
-    result = lru_cache.get(5)
-    assert result == 4
+    assert lru_cache.get(5) == 4
     lru_cache.put(5, 3)
-    result = lru_cache.get(5)
-    assert result == 3
+    assert lru_cache.get(5) == 3
     size = lru_cache.linked_list.size
     assert size == 1
     lru_cache.put(3, 2)
-    result = lru_cache.get(3)
-    assert result == 2
+    assert lru_cache.get(3) == 2
     size = lru_cache.linked_list.size
     assert size == 2
     output = print_linkedlist(lru_cache.linked_list.head)
@@ -252,6 +262,7 @@ def lrucache_tests():
     lru_cache.put(5, 1)
     output = print_linkedlist(lru_cache.linked_list.head)
     assert output == [1, 2, 3, 4]
+    assert lru_cache.linked_list.size == 4
 
     cache = LRUCache(2)
     cache.put(1, 1)
