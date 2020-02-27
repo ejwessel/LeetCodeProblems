@@ -11,3 +11,5 @@ Space: O(n)
 - I need to keep all sums in memory
 
 naive solutions are O(n^2) runtime and O(1) memory
+
+I guess I would have expected the interviewer to guide me to the DP problem in this case.
