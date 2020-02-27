@@ -51,6 +51,7 @@ class LinkedList:
             self.size -= 1
             return element_to_remove
 
+
 def print_linkedlist(head: Node):
     output = []
     current = head
@@ -59,11 +60,38 @@ def print_linkedlist(head: Node):
         current = current.next
     return output
 
+class Bidict:
+    def __init__(self):
+        self.key_to_val = {}
+        self.val_to_key = {}
+
+    def insert(self, key, val):
+        self.key_to_val[key] = val
+        self.val_to_key[val] = key
+
+    def remove_key(self, key):
+        value = self.key_to_val[key]
+        del self.key_to_val[key]
+        del self.val_to_key[value]
+
+    def remove_val(self, val):
+        key = self.val_to_key[val]
+        del self.val_to_key[val]
+        del self.key_to_val[key]
+
+    def contains_key(self, key):
+        return key in self.key_to_val
+
+    def contains_val(self, val):
+        return val in self.val_to_key
+
 
 class LRUCache:
 
     def __init__(self, capacity: int):
-        pass
+        self.capacity = capacity
+        self.linkedlist = LinkedList()
+        self.nodes = {}
 
     def get(self, key: int) -> int:
         pass
@@ -99,6 +127,17 @@ if __name__ == "__main__":
     assert node_removed is None
     output = print_linkedlist(linked_list.head)
     assert output == []
+
+    bidict = Bidict()
+    bidict.insert(5, "hello")
+    contains = bidict.contains_key(5)
+    assert contains
+    contains = bidict.contains_key(6)
+    assert not contains
+    contains = bidict.contains_val("hello")
+    assert contains
+    contains = bidict.contains_val("hello0")
+    assert not contains
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)
