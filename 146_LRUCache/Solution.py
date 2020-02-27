@@ -96,8 +96,8 @@ class LRUCache:
             self.linked_list.tail = self.linked_list.tail.prev
             self.linked_list.tail.next = None
             node_to_move.prev = None
-            self.linked_list.insertHead(node_to_move)
             self.linked_list.size -= 1
+            self.linked_list.insertHead(node_to_move)
             return node_to_move.val
         else:
             # link prev and next together
@@ -106,9 +106,9 @@ class LRUCache:
             # disconnect the node
             node_to_move.next = None
             node_to_move.prev = None
+            self.linked_list.size -= 1
             # insert it into the beginning
             self.linked_list.insertHead(node_to_move)
-            self.linked_list.size -= 1
             return node_to_move.val
 
     def put(self, key: int, value: int) -> None:
@@ -134,8 +134,8 @@ class LRUCache:
                 self.linked_list.tail = self.linked_list.tail.prev
                 self.linked_list.tail.next = None
                 node_to_move.prev = None
-                self.linked_list.insertHead(node_to_move)
                 self.linked_list.size -= 1
+                self.linked_list.insertHead(node_to_move)
             # if the node is anywhere else
             else:
                 # link prev and next together
@@ -144,9 +144,9 @@ class LRUCache:
                 # disconnect the node
                 node_to_move.next = None
                 node_to_move.prev = None
+                self.linked_list.size -= 1
                 # insert it into the beginning
                 self.linked_list.insertHead(node_to_move)
-                self.linked_list.size -= 1
         # if the the key value pair is new
         else:
             # insert
