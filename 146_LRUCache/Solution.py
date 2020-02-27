@@ -190,8 +190,8 @@ def linkedlists_tests():
     node_removed = linked_list.removeTail() # won't provide anything if nothing to remove
     assert node_removed is None
     assert linked_list.size == 0
-    assert linked_list.head == None
-    assert linked_list.tail == None
+    assert linked_list.head is None
+    assert linked_list.tail is None
     output = print_linkedlist(linked_list.head)
     assert output == []
 
