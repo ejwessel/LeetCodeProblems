@@ -91,7 +91,6 @@ class Bidict:
 
 
 class LRUCache:
-
     def __init__(self, capacity: int):
         self.capacity = capacity
         self.linked_list = LinkedList()
@@ -158,8 +157,7 @@ class LRUCache:
                 removed_node = self.linked_list.removeTail()
                 self.nodes.remove_val(removed_node)
 
-
-if __name__ == "__main__":
+def linkedlists_tests():
     linked_list = LinkedList()
     new_node_5 = Node(5)
     linked_list.insertHead(new_node_5)
@@ -190,6 +188,7 @@ if __name__ == "__main__":
     output = print_linkedlist(linked_list.head)
     assert output == []
 
+def bidict_tests():
     bidict = Bidict()
     bidict.insert(5, "hello")
     contains = bidict.contains_key(5)
@@ -208,6 +207,12 @@ if __name__ == "__main__":
     bidict.remove_key(6)
     contains = bidict.contains_key(56)
     assert not contains
+
+
+if __name__ == "__main__":
+
+    linkedlists_tests()
+    bidict_tests()
 
     lru_cache = LRUCache(4)
     result = lru_cache.get(5)
