@@ -19,3 +19,5 @@ The solution saved is not my solution, but one I took from leetcode because
 Runtime: O(n(logn)^2)
 
 Runtime: O(1)
+
+I would never ask this problem in an interview. The amount of complexity to write such an algorithm is a extremely tedious.
