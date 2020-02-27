@@ -169,6 +169,7 @@ if __name__ == "__main__":
     linked_list.insertHead(new_node_3)
     new_node_1 = Node(1)
     linked_list.insertHead(new_node_1)
+    assert linked_list.size == 4
     output = print_linkedlist(linked_list.head)
     assert output == [1, 3, 4, 5]
 
@@ -185,6 +186,7 @@ if __name__ == "__main__":
     assert node_removed == new_node_1
     node_removed = linked_list.removeTail() # won't provide anything if nothing to remove
     assert node_removed is None
+    assert linked_list.size == 0
     output = print_linkedlist(linked_list.head)
     assert output == []
 
