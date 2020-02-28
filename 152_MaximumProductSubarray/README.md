@@ -1,7 +1,8 @@
 ## Maximum Product Subarray
 
 I was super close identifying this solution.
-I ended up abandoning the solution because I couldn't wrap my head around it
+I ended up abandoning the solution because I couldn't wrap my head around the relation of how the intermittent values were kept.
+I definitely identified that I could return the positive and negative running values after visiting a number
 
 I could identify the naive solution, but that doesn't help me all that much.
 
