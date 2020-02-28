@@ -1,10 +1,13 @@
 class Solution:
     def reverseWords(self, s: str) -> str:
-        # remove spaces
-        s = ' '.join(s.split())
         components = s.split(' ')
-        components.reverse()
-        return ' '.join(components)
+        new_order = []
+        for i in reversed(range(len(components))):
+            if components[i] is '':
+                continue
+            else:
+                new_order.append(components[i])
+        return ' '.join(new_order)
 
 if __name__ == "__main__":
     sol = Solution()
