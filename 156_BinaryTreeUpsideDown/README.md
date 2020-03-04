@@ -8,3 +8,4 @@ Runtime: O(n)
 
 Space: O(n)
 - recursive stack grows linearly as we visit the left node
+- it's possible to do this problem in linear space
