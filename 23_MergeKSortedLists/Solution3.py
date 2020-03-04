@@ -10,63 +10,42 @@ class ListNode:
 
 class MinHeap:
     def __init__(self):
-        self.capacity = 100
-        self.heap = [None] * self.capacity
-        self.size = 0
-
-    def get_parent(self, index):
-        return (index - 1) // 2
+        self.heap = []
 
     def insert(self, new_node):
-        self.heap[self.size] = new_node
+        self.heap.append(new_node)
         # heapify up
-        current_idx = self.size
-        while current_idx != 0:
-            parent = self.get_parent(current_idx)
-            if self.heap[current_idx].val < self.heap[parent].val:
-                temp = self.heap[parent]
-                self.heap[parent] = self.heap[current_idx]
+        current_idx = len(self.heap) - 1
+        while current_idx > 0:
+            parent_idx = (current_idx - 1) // 2
+            if self.heap[current_idx].val < self.heap[parent_idx].val:
+                temp = self.heap[parent_idx]
+                self.heap[parent_idx] = self.heap[current_idx]
                 self.heap[current_idx] = temp
-                current_idx = parent
-            else:
-                break
-
-        # increase size
-        self.size += 1
-        # handle if we're at capacity
-        if self.size + 1 == self.capacity:
-            list_addendum = [None] * self.capacity
-            self.heap += list_addendum
-            self.capacity *= 2
+                current_idx = parent_idx
+                continue
+            break
 
     def getMin(self):
-        if self.size <= 0:
-            return None
-
-        # handle getting element
-        temp = self.heap[0]
-        self.heap[0] = self.heap[self.size - 1]
-        self.heap[self.size - 1] = None
-        self.size -= 1
-        # element is removed and ready to be returned
-        min_element = temp
+        min_element = self.heap[0]
+        self.heap[0] = self.heap[len(self.heap) - 1]
+        self.heap.pop()
 
         # down heap from top
         current_idx = 0
-        swapped = True
-        while swapped:
+        while True:
             left_idx = current_idx * 2 + 1
             right_idx = current_idx * 2 + 2
 
             idx_to_compare = None
-            if left_idx < self.size and right_idx < self.size:
+            if left_idx < len(self.heap) and right_idx < len(self.heap):
                 if self.heap[left_idx].val <= self.heap[right_idx].val:
                     idx_to_compare = left_idx
-                elif self.heap[right_idx].val < self.heap[left_idx].val:
+                else:
                     idx_to_compare = right_idx
-            elif left_idx < self.size:
+            elif left_idx < len(self.heap):
                 idx_to_compare = left_idx
-            elif right_idx < self.size:
+            elif right_idx < len(self.heap):
                 idx_to_compare = right_idx
 
             # do the comparision to determine if heapify
@@ -75,8 +54,8 @@ class MinHeap:
                 self.heap[idx_to_compare] = self.heap[current_idx]
                 self.heap[current_idx] = temp
                 current_idx = idx_to_compare
-            else:
-                swapped = False
+                continue
+            break
 
         return min_element
 
@@ -92,7 +71,7 @@ class Solution:
 
         head = None
         tail = None
-        while heap.size > 0:
+        while len(heap.heap) > 0:
             next_element = heap.getMin()
             remaining_head = next_element.next
             next_element.next = None
@@ -131,42 +110,6 @@ def create_linked_list(list):
 
 
 if __name__ == "__main__":
-    # minHeap = MinHeap()
-    # minHeap.insert(1)
-    # minHeap.insert(9)
-    # minHeap.insert(6)
-    # minHeap.insert(4)
-    # minHeap.insert(0)
-    # minHeap.insert(-1)
-    # minHeap.insert(-1)
-    # print(minHeap.heap)
-    #
-    # minHeap = MinHeap()
-    # minHeap.insert(1)
-    # minHeap.insert(9)
-    # minHeap.insert(6)
-    # minHeap.insert(4)
-    # minHeap.insert(0)
-    # minHeap.insert(-1)
-    # minHeap.insert(-1)
-    # result = minHeap.getMin()
-    # print(result)
-    # result = minHeap.getMin()
-    # print(result)
-    # result = minHeap.getMin()
-    # print(result)
-    # result = minHeap.getMin()
-    # print(result)
-    # result = minHeap.getMin()
-    # print(result)
-    # result = minHeap.getMin()
-    # print(result)
-    # result = minHeap.getMin()
-    # print(result)
-    # result = minHeap.getMin()
-    # print(result)
-    # result = minHeap.getMin()
-    # print(result)
 
     list_of_lists = [[-8, -7, -6, -3, -2, -2, 0, 3], [-10, -6, -4, -4, -4, -2, -1, 4], [-10, -9, -8, -8, -6],
                      [-10, 0, 4]]
