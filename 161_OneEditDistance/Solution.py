@@ -1,9 +1,5 @@
 class Solution:
     def isOneEditDistance(self, s: str, t: str) -> bool:
-        # if the same then distance is never 1
-        if s == t:
-            return False
-
         # add empty char at beginning
         s = ' ' + s
         t = ' ' + t
